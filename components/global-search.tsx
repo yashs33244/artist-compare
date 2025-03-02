@@ -97,10 +97,11 @@ export default function GlobalSearch({ onArtistSelect }) {
               {results.map((artist) => (
                 <li key={artist.id}>
                   <div className="flex items-center justify-between gap-3 px-4 py-2 hover:bg-muted">
-                    <Link
-                      href={`/artists/${artist.id}`}
+                    <div
+                      // href={`/artists/${artist.id}`}
                       className="flex items-center gap-3 flex-1"
-                      onClick={(e) => e.stopPropagation()}
+                      // onClick={(e) => e.stopPropagation()}
+                      onClick={() => handleSelectArtist(artist)}
                     >
                       <div className="h-10 w-10 overflow-hidden rounded-full">
                         <Image
@@ -117,7 +118,7 @@ export default function GlobalSearch({ onArtistSelect }) {
                           {artist.genre}
                         </p>
                       </div>
-                    </Link>
+                    </div>
                     {onArtistSelect && (
                       <Button
                         size="sm"
