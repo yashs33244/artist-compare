@@ -23,6 +23,7 @@ export default function ComparePage({
         </p>
       </div>
 
+      {/* Pass initialArtistIds to ComparisonForm */}
       <ComparisonForm initialArtistIds={artistIds} />
 
       {artistIds.length === 0 && (

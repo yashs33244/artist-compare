@@ -12,12 +12,15 @@ export default function ComparisonForm({ initialArtistIds = [] }) {
   const [error, setError] = useState(null);
   const router = useRouter();
 
+  // Fetch initial artists when initialArtistIds changes
   useEffect(() => {
     const fetchInitialArtists = async () => {
       if (initialArtistIds.length > 0) {
         try {
           setIsLoading(true);
           setError(null);
+
+          // Fetch artist data for each ID
           const promises = initialArtistIds.map((id) =>
             fetch(`/api/artists/${id}`).then((res) => {
               if (!res.ok)
@@ -25,10 +28,11 @@ export default function ComparisonForm({ initialArtistIds = [] }) {
               return res.json();
             })
           );
+
           const artists = await Promise.all(promises);
           setSelectedArtists(artists.filter((artist) => artist && artist.id));
         } catch (error) {
-          // console.error("Failed to fetch initial artists:", error);
+          console.error("Failed to fetch initial artists:", error);
           // setError(
           //   "Some artists could not be loaded. Please try again or select different artists."
           // );
@@ -41,18 +45,15 @@ export default function ComparisonForm({ initialArtistIds = [] }) {
     };
 
     fetchInitialArtists();
-  }, [initialArtistIds]);
+  }, [initialArtistIds]); // Re-run when initialArtistIds changes
 
   const handleArtistSelect = (artist) => {
-    // Prevent default navigation if it's an event
     if (artist && artist.preventDefault) {
       artist.preventDefault();
     }
 
-    // Ensure we have the artist data object
     const artistData = artist.artist || artist;
 
-    // Store the artist data directly from the search results
     if (
       artistData &&
       artistData.id &&
